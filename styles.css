@@ -1,0 +1,357 @@
+:root {
+  --as-dim-opacity: 0.35;
+}
+
+ytd-rich-item-renderer,
+ytd-grid-video-renderer,
+ytd-video-renderer,
+ytd-compact-video-renderer,
+yt-lockup-view-model {
+  isolation: isolate !important;
+}
+
+#masthead-container,
+ytd-popup-container,
+tp-yt-iron-dropdown,
+tp-yt-paper-dialog,
+tp-yt-app-drawer,
+#guide-wrapper,
+ytd-notification-topbar-button-renderer {
+  z-index: 2500 !important;
+}
+
+.as-card-watched {
+  opacity: var(--as-dim-opacity, 0.35) !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.as-card-watched:hover {
+  opacity: 0.95 !important;
+}
+
+.as-card-hidden {
+  display: none !important;
+}
+
+.as-badge-group {
+  position: absolute !important;
+  top: 8px !important;
+  left: 8px !important;
+  z-index: 30 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  pointer-events: auto !important;
+}
+
+.as-shorts-badge-group {
+  position: fixed !important;
+  top: var(--as-shorts-top, 64px) !important;
+  left: var(--as-shorts-left, 0px) !important;
+  z-index: 1000 !important;
+}
+
+.as-shorts-badge-group.as-shorts-hidden {
+  display: none !important;
+}
+
+.as-badge {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 30 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "YouTube Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  border-radius: 50% !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  background: rgba(15, 15, 15, 0.88) !important;
+  color: #f1f1f1 !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  pointer-events: auto !important;
+  opacity: 0.9 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+  min-width: 26px !important;
+  min-height: 26px !important;
+  width: 26px !important;
+  height: 26px !important;
+  transition: opacity 0.15s ease, transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.as-badge .as-badge-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
+
+.as-badge .as-badge-icon svg {
+  display: block !important;
+  width: 13px !important;
+  height: 13px !important;
+  flex-shrink: 0 !important;
+  pointer-events: none !important;
+}
+
+.as-badge:hover {
+  opacity: 1 !important;
+  background: rgba(35, 35, 35, 0.98) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+}
+
+.as-badge-label {
+  display: none !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.4px !important;
+  line-height: 1.2 !important;
+}
+
+.as-badge.as-badge-watched {
+  width: auto !important;
+  height: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: rgba(18, 18, 18, 0.95) !important;
+  border-color: #ff0033 !important;
+  box-shadow: 0 0 10px rgba(255, 0, 51, 0.4), 0 2px 6px rgba(0, 0, 0, 0.7) !important;
+  color: #ffffff !important;
+  pointer-events: auto !important;
+  border-radius: 5px !important;
+  gap: 4px !important;
+  padding: 3px 8px !important;
+  font-size: 11px !important;
+}
+
+.as-badge.as-badge-watched .as-badge-label {
+  display: inline !important;
+}
+
+.as-badge.as-badge-watched .as-badge-icon {
+  color: #ff0033 !important;
+  font-size: 12px !important;
+}
+
+.as-badge.as-badge-watched:hover {
+  background: rgba(38, 12, 18, 0.98) !important;
+  border-color: #ff3355 !important;
+  box-shadow: 0 0 14px rgba(255, 0, 51, 0.6), 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+}
+
+.as-badge:active {
+  background: rgba(45, 45, 45, 1) !important;
+}
+
+.as-watch-later-badge {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 30 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  width: 26px !important;
+  height: 26px !important;
+  min-width: 26px !important;
+  min-height: 26px !important;
+  border-radius: 50% !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  background: rgba(15, 15, 15, 0.88) !important;
+  color: #f1f1f1 !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  pointer-events: auto !important;
+  opacity: 0.9 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.15s ease, transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease !important;
+}
+
+.as-watch-later-badge svg {
+  display: block !important;
+  width: 14px !important;
+  height: 14px !important;
+  pointer-events: none !important;
+}
+
+.as-watch-later-badge:hover {
+  opacity: 1 !important;
+  background: rgba(35, 35, 35, 0.98) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+}
+
+.as-watch-later-badge:active {
+  background: rgba(45, 45, 45, 1) !important;
+}
+
+.as-watch-later-badge.as-wl-active {
+  opacity: 1 !important;
+  background: rgba(28, 22, 10, 0.95) !important;
+  border-color: #f59e0b !important;
+  color: #fbbf24 !important;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.4), 0 2px 6px rgba(0, 0, 0, 0.7) !important;
+}
+
+.as-watch-later-badge.as-wl-active:hover {
+  background: rgba(45, 33, 12, 0.98) !important;
+  border-color: #fbbf24 !important;
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.6), 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+}
+
+.as-reload-toast {
+  position: fixed !important;
+  top: 70px !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(-10px) !important;
+  z-index: 9999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  background: #18181b !important;
+  border: 1px solid #ff0033 !important;
+  color: #ffffff !important;
+  padding: 12px 18px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 16px rgba(255, 0, 51, 0.35) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.25s ease, transform 0.25s ease !important;
+}
+
+.as-reload-toast.as-show {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateX(-50%) translateY(0) !important;
+}
+
+.as-reload-btn {
+  background: #ff0033 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  transition: background-color 0.15s ease !important;
+}
+
+.as-reload-btn:hover {
+  background: #cc0029 !important;
+}
+
+.as-channel-progress {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin: 10px 0 6px 0 !important;
+  max-width: 380px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  padding: 8px 12px !important;
+  background: rgba(128, 128, 128, 0.08) !important;
+  border: 1px solid rgba(128, 128, 128, 0.18) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  user-select: none !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "YouTube Sans", sans-serif !important;
+  transition: opacity 0.2s ease, border-color 0.2s ease, background-color 0.2s ease !important;
+}
+
+.as-channel-progress:hover {
+  border-color: rgba(255, 0, 51, 0.4) !important;
+  background: rgba(128, 128, 128, 0.12) !important;
+}
+
+.as-channel-progress-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+}
+
+.as-channel-progress-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  color: var(--yt-spec-text-primary, #f1f1f1) !important;
+  font-weight: 500 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.as-channel-progress-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #ff0033 !important;
+  flex-shrink: 0 !important;
+}
+
+.as-channel-progress.as-all-watched .as-channel-progress-icon {
+  color: #2ba640 !important;
+}
+
+.as-channel-progress-icon svg {
+  display: block !important;
+  width: 14px !important;
+  height: 14px !important;
+  flex-shrink: 0 !important;
+}
+
+.as-channel-progress-percent {
+  font-weight: 700 !important;
+  color: #ff0033 !important;
+  font-size: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+.as-channel-progress.as-all-watched .as-channel-progress-percent {
+  color: #2ba640 !important;
+}
+
+.as-channel-progress-track {
+  width: 100% !important;
+  height: 6px !important;
+  background: rgba(128, 128, 128, 0.2) !important;
+  border-radius: 3px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.as-channel-progress-bar {
+  height: 100% !important;
+  width: 0%;
+  background: #ff0033 !important;
+  border-radius: 3px !important;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  will-change: width !important;
+}
+
+.as-channel-progress-bar.as-completed {
+  background: #2ba640 !important;
+}

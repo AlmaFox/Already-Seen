@@ -1,0 +1,6 @@
+# Personal watch history and backups
+initial_history.json
+already_seen_backup.json
+
+# Build output
+dist/

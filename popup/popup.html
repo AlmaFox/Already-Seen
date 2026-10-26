@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Already Seen</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <header class="popup-header">
+      <div class="brand">
+        <img class="brand-badge" src="../icons/icon.svg" alt="Already Seen">
+        <div class="brand-info">
+          <h1 class="brand-title">Already Seen</h1>
+          <span class="brand-subtitle" id="i18nSubtitle">YouTube Watch Tracker</span>
+        </div>
+      </div>
+      <div class="lang-switch">
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+        <button type="button" class="lang-btn" data-lang="ru">RU</button>
+      </div>
+    </header>
+
+    <section class="stats-card">
+      <div class="stats-col">
+        <div class="stats-number" id="totalCount">0</div>
+        <div class="stats-label" id="i18nWatchedVideos">Watched</div>
+      </div>
+      <div class="stats-divider"></div>
+      <div class="stats-col">
+        <div class="stats-number stats-wl" id="totalWatchLaterCount">0</div>
+        <div class="stats-label" id="i18nWatchLaterVideos">Watch Later</div>
+      </div>
+    </section>
+
+    <button type="button" class="btn btn-primary" id="btnOpenDashboard">
+      <svg class="btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="3" y1="9" x2="21" y2="9"></line>
+        <line x1="9" y1="21" x2="9" y2="9"></line>
+      </svg>
+      <span id="i18nDashboard">Open Video Dashboard</span>
+    </button>
+
+    <section class="settings-card">
+      <div class="setting-row">
+        <div class="setting-info">
+          <label class="setting-title" for="toggleDim" id="i18nDimTitle">Dim Watched</label>
+          <span class="setting-desc" id="i18nDimDesc">Fade out thumbnails of seen videos</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="toggleDim">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row sub-row" id="opacityRow">
+        <div class="setting-info">
+          <label class="setting-title" for="rangeOpacity" id="i18nOpacityTitle">Dimming Opacity</label>
+          <span class="setting-desc" id="i18nOpacityDesc">Lower value is more transparent</span>
+        </div>
+        <div class="range-wrapper">
+          <input type="range" id="rangeOpacity" min="10" max="70" step="5" value="35">
+          <span class="range-value" id="valOpacity">35%</span>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <label class="setting-title" for="toggleHide" id="i18nHideTitle">Hide Watched</label>
+          <span class="setting-desc" id="i18nHideDesc">Completely remove seen videos from view</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="toggleHide">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <label class="setting-title" for="toggleAuto" id="i18nAutoTitle">Auto-mark on Playback</label>
+          <span class="setting-desc" id="i18nAutoDesc">Mark watched when playback threshold is reached</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="toggleAuto">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row sub-row" id="thresholdRow">
+        <div class="setting-info">
+          <label class="setting-title" for="rangeThreshold" id="i18nThresholdTitle">Auto-mark Threshold</label>
+          <span class="setting-desc" id="i18nThresholdDesc">Required progress to mark seen</span>
+        </div>
+        <div class="range-wrapper">
+          <input type="range" id="rangeThreshold" min="10" max="95" step="5" value="80">
+          <span class="range-value" id="valThreshold">80%</span>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <label class="setting-title" for="toggleBadgeCounter" id="i18nBadgeCounterTitle">Icon Counter</label>
+          <span class="setting-desc" id="i18nBadgeCounterDesc">Show watched count badge on extension icon</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="toggleBadgeCounter">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <label class="setting-title" for="toggleChannelProgress" id="i18nChannelProgressTitle">Channel Progress</label>
+          <span class="setting-desc" id="i18nChannelProgressDesc">Show watched progress bar on channel pages</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="toggleChannelProgress">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <section class="actions-card">
+      <div class="actions-group">
+        <button type="button" class="btn btn-secondary" id="btnExport">
+          <svg class="btn-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span id="i18nExport">Export JSON</span>
+        </button>
+        <button type="button" class="btn btn-secondary" id="btnImport">
+          <svg class="btn-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <span id="i18nImport">Import JSON</span>
+        </button>
+      </div>
+      <input type="file" id="fileInput" accept=".json" style="display: none;">
+    </section>
+
+    <div class="toast" id="toast"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

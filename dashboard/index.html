@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Already Seen — Видео-дашборд</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="icon" type="image/svg+xml" href="../icons/icon.svg">
+</head>
+<body>
+  <div class="app-layout">
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <img class="brand-badge" src="../icons/icon.svg" alt="Already Seen">
+          <div class="brand-text">
+            <h1 class="brand-title">Already Seen</h1>
+            <span class="brand-tagline" id="i18nTagline">Списки просмотренных и сохранённых видео</span>
+          </div>
+        </div>
+
+        <div class="header-stats">
+          <div class="stat-pill" id="statWatchedPill">
+            <span class="stat-dot dot-watched"></span>
+            <span class="stat-label" id="i18nStatWatched">Просмотрено:</span>
+            <strong class="stat-val" id="statWatchedCount">0</strong>
+          </div>
+          <div class="stat-pill" id="statWlPill">
+            <span class="stat-dot dot-wl"></span>
+            <span class="stat-label" id="i18nStatWl">Смотреть позже:</span>
+            <strong class="stat-val" id="statWlCount">0</strong>
+          </div>
+          <div class="stat-pill" id="statTotalPill">
+            <span class="stat-label" id="i18nStatTotal">Всего:</span>
+            <strong class="stat-val" id="statTotalCount">0</strong>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" id="linkYouTube">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+            <span>YouTube</span>
+          </a>
+          <div class="lang-switch">
+            <button type="button" class="lang-btn" data-lang="en">EN</button>
+            <button type="button" class="lang-btn active" data-lang="ru">RU</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="controls-bar">
+      <div class="controls-inner">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput" placeholder="Поиск по названию или каналу...">
+          <button type="button" class="search-clear" id="searchClear" aria-label="Очистить поиск">✕</button>
+        </div>
+
+        <nav class="tabs-nav">
+          <button type="button" class="tab-btn active" data-tab="all" id="tabAll">
+            <span id="i18nTabAll">Все</span>
+            <span class="tab-count" id="countAll">0</span>
+          </button>
+          <button type="button" class="tab-btn" data-tab="watched" id="tabWatched">
+            <span id="i18nTabWatched">Просмотренные</span>
+            <span class="tab-count count-watched" id="countWatched">0</span>
+          </button>
+          <button type="button" class="tab-btn" data-tab="watch-later" id="tabWatchLater">
+            <span id="i18nTabWatchLater">Смотреть позже</span>
+            <span class="tab-count count-wl" id="countWl">0</span>
+          </button>
+          <button type="button" class="tab-btn" data-tab="stats" id="tabStats">
+            <svg class="tab-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 20V10M12 20V4M6 20v-6"></path>
+            </svg>
+            <span id="i18nTabStats">Статистика</span>
+          </button>
+        </nav>
+
+        <div class="sort-box">
+          <label for="sortSelect" class="sort-label" id="i18nSortLabel">Сортировка:</label>
+          <select id="sortSelect">
+            <option value="newest" id="optSortNewest">Сначала новые</option>
+            <option value="oldest" id="optSortOldest">Сначала старые</option>
+            <option value="title-asc" id="optSortTitleAsc">По названию (А-Я)</option>
+            <option value="title-desc" id="optSortTitleDesc">По названию (Я-А)</option>
+            <option value="channel-asc" id="optSortChannelAsc">По каналу (А-Я)</option>
+          </select>
+        </div>
+
+        <div class="actions-box">
+          <button type="button" class="btn btn-secondary" id="btnFetchMetadata">
+            <svg class="fetch-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            <span id="i18nBtnFetch">Подтянуть названия</span>
+            <span class="badge-fetch-count" id="badgeFetchCount" style="display: none;">0</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="btnExport">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span id="i18nBtnExport">Экспорт</span>
+          </button>
+          <button type="button" class="btn btn-secondary" id="btnImport">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span id="i18nBtnImport">Импорт</span>
+          </button>
+          <input type="file" id="fileInput" accept=".json" style="display: none;">
+        </div>
+      </div>
+      <div class="fetch-progress-wrap" id="fetchProgressWrap" style="display: none;">
+        <div class="fetch-progress-bar" id="fetchProgressBar"></div>
+      </div>
+    </div>
+
+    <main class="main-content">
+      <div class="content-status" id="contentStatus">
+        <span id="statusText">Загрузка видео...</span>
+      </div>
+
+      <div class="video-grid" id="videoGrid"></div>
+
+      <section class="stats-view" id="statsView" style="display: none;">
+        <div class="stats-hero-grid">
+          <div class="stats-card stat-card-watched">
+            <div class="stats-card-header">
+              <span class="stats-card-title" id="i18nStatCardWatched">Просмотрено</span>
+              <div class="stats-icon-wrap icon-watched">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="stats-card-value" id="statsValWatched">0</div>
+            <div class="stats-progress-wrap">
+              <div class="stats-progress-bar bar-watched" id="statsProgressWatched" style="width: 0%;"></div>
+            </div>
+            <div class="stats-card-sub" id="statsSubWatched">0% от всех видео</div>
+          </div>
+
+          <div class="stats-card stat-card-wl">
+            <div class="stats-card-header">
+              <span class="stats-card-title" id="i18nStatCardWl">Смотреть позже</span>
+              <div class="stats-icon-wrap icon-wl">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="stats-card-value" id="statsValWl">0</div>
+            <div class="stats-progress-wrap">
+              <div class="stats-progress-bar bar-wl" id="statsProgressWl" style="width: 0%;"></div>
+            </div>
+            <div class="stats-card-sub" id="statsSubWl">Ожидают вашего просмотра</div>
+          </div>
+
+          <div class="stats-card stat-card-total">
+            <div class="stats-card-header">
+              <span class="stats-card-title" id="i18nStatCardTotal">Всего в базе</span>
+              <div class="stats-icon-wrap icon-total">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                  <line x1="7" y1="2" x2="7" y2="22"></line>
+                  <line x1="17" y1="2" x2="17" y2="22"></line>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="stats-card-value" id="statsValTotal">0</div>
+            <div class="stats-card-sub" id="statsSubTotal">Уникальных видео в истории</div>
+          </div>
+
+          <div class="stats-card stat-card-time">
+            <div class="stats-card-header">
+              <span class="stats-card-title" id="i18nStatCardTime">Оценка времени</span>
+              <div class="stats-icon-wrap icon-time">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                </svg>
+              </div>
+            </div>
+            <div class="stats-card-value" id="statsValTime">~0 мин</div>
+            <div class="stats-card-sub" id="statsSubTime">Контента просмотрено</div>
+          </div>
+        </div>
+
+        <div class="stats-grid-two">
+          <div class="stats-panel">
+            <div class="stats-panel-header">
+              <div class="stats-panel-title-wrap">
+                <h3 class="stats-panel-title" id="i18nTopChannelsTitle">Топ каналов</h3>
+                <span class="stats-panel-subtitle" id="i18nTopChannelsSub">Авторы, которых вы смотрите чаще всего</span>
+              </div>
+              <span class="stats-badge-pill" id="statsUniqueChannelsBadge">0 каналов</span>
+            </div>
+            <div class="top-channels-list" id="topChannelsList"></div>
+          </div>
+
+          <div class="stats-panel">
+            <div class="stats-panel-header">
+              <div class="stats-panel-title-wrap">
+                <h3 class="stats-panel-title" id="i18nActivityDayTitle">Активность по дням недели</h3>
+                <span class="stats-panel-subtitle" id="i18nActivityDaySub">Отметки видео на этой неделе</span>
+              </div>
+              <div class="stats-panel-actions">
+                <div class="stats-toggle-group">
+                  <button type="button" class="stats-toggle-btn active" id="btnChartThisWeek">Эта неделя</button>
+                  <button type="button" class="stats-toggle-btn" id="btnChartAllTime">За всё время</button>
+                </div>
+                <span class="stats-badge-pill" id="statsPeakDayBadge">-</span>
+              </div>
+            </div>
+            <div class="day-chart" id="dayChart"></div>
+          </div>
+        </div>
+
+        <div class="stats-insights-bar">
+          <div class="insight-item">
+            <span class="insight-label" id="i18nPeriodToday">Сегодня:</span>
+            <strong class="insight-val" id="valPeriodToday">0</strong>
+          </div>
+          <div class="insight-divider"></div>
+          <div class="insight-item">
+            <span class="insight-label" id="i18nPeriodWeek">За 7 дней:</span>
+            <strong class="insight-val" id="valPeriodWeek">0</strong>
+          </div>
+          <div class="insight-divider"></div>
+          <div class="insight-item">
+            <span class="insight-label" id="i18nPeriodMonth">За 30 дней:</span>
+            <strong class="insight-val" id="valPeriodMonth">0</strong>
+          </div>
+          <div class="insight-divider"></div>
+          <div class="insight-item">
+            <span class="insight-label" id="i18nPeriodOlder">Ранее:</span>
+            <strong class="insight-val" id="valPeriodOlder">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <div class="empty-state" id="emptyState" style="display: none;">
+        <div class="empty-icon-wrap">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+            <line x1="7" y1="2" x2="7" y2="22"></line>
+            <line x1="17" y1="2" x2="17" y2="22"></line>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <line x1="2" y1="7" x2="7" y2="7"></line>
+            <line x1="2" y1="17" x2="7" y2="17"></line>
+            <line x1="17" y1="17" x2="22" y2="17"></line>
+            <line x1="17" y1="7" x2="22" y2="7"></line>
+          </svg>
+        </div>
+        <h2 class="empty-title" id="emptyTitle">Список пуст</h2>
+        <p class="empty-desc" id="emptyDesc">Отмечайте видео как просмотренные («+») или сохраняйте на потом («Часы») прямо на страницах YouTube.</p>
+        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="btnEmptyYouTube">
+          <span>Перейти на YouTube</span>
+        </a>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <div class="danger-zone">
+          <div class="danger-info">
+            <div class="danger-title-row">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <span class="danger-title" id="i18nDangerTitle">Опасная зона</span>
+            </div>
+            <span class="danger-desc" id="i18nDangerDesc">Безвозвратное удаление всей сохранённой истории и очередей</span>
+          </div>
+          <button type="button" class="btn btn-danger-outline" id="btnOpenClearModal">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            <span id="i18nBtnClearAll">Очистить всю базу</span>
+          </button>
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal-overlay" id="clearModalOverlay" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <span class="modal-step-badge" id="modalStepBadge">Шаг 1 из 3</span>
+            <h3 class="modal-title" id="modalTitle">Удалить всю базу данных?</h3>
+          </div>
+          <button type="button" class="modal-close" id="btnCancelClear" aria-label="Закрыть">✕</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-step" id="modalStep1">
+            <p class="modal-text" id="modalStep1Text">Вы собираетесь удалить все сохранённые видео из базы Already Seen. Списки «Просмотрено» и «Смотреть позже», а также статистика будут сброшены.</p>
+            <div class="modal-count-box">
+              <span id="modalStep1CountLabel">Всего видео к удалению:</span>
+              <strong id="modalStep1Count">0</strong>
+            </div>
+          </div>
+
+          <div class="modal-step" id="modalStep2" style="display: none;">
+            <p class="modal-text modal-warning-text" id="modalStep2Text">Внимание! Это действие невозможно отменить. Все ваши отметки на YouTube исчезнут. Рекомендуем предварительно сохранить резервную копию.</p>
+            <div class="modal-backup-cta">
+              <button type="button" class="btn btn-secondary" id="btnModalExportBackup">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span id="i18nModalExport">Скачать бэкап (Экспорт)</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="modal-step" id="modalStep3" style="display: none;">
+            <p class="modal-text" id="modalStep3Text">Для окончательного подтверждения введите слово <strong class="confirm-word-highlight" id="modalConfirmWordText">УДАЛИТЬ</strong> в поле ниже:</p>
+            <input type="text" class="modal-input" id="inputClearConfirm" placeholder="УДАЛИТЬ" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btnModalDismiss">Отмена</button>
+          <button type="button" class="btn btn-danger" id="btnModalNext">Далее (1/3)</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
