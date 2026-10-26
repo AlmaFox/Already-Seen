@@ -25,3 +25,8 @@ Keep the `version` in `manifest.json` and `firefox/manifest.json` in sync.
 ## Optional seed history
 
 If `initial_history.json` (same format as the exported backup) is present, it is loaded once on first run. It is git-ignored.
+
+## Contributors
+
+- [AlmaFox](https://github.com/AlmaFox) — author
+- Claude (Anthropic) — co-author
